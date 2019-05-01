@@ -1,2 +1,168 @@
-#include<iostream>
+#include <iostream>
+#include <stdio.h>
+#include <stdlib.h>
 using namespace std;
+
+//Mendeklarasi struct sebuah tree awal
+struct Node{
+      int datanya;
+      Node *kirinya;
+      Node *kanannya;
+};
+
+//Menambahkan node baru
+void tambahkan(Node **root, int databaru)
+{
+      //Misal root masih kosong
+      if((*root) == NULL)
+      {
+            //Pembuatan node baru
+            Node *baru;
+            //Pengalokasian memori dari node yang telah dibuat
+            baru = new Node;
+            //Inisialisasi awal node yang baru dibuat
+            baru->datanya = databaru;
+            baru->kirinya = NULL;
+            baru->kanannya = NULL;
+            (*root) = baru;
+            (*root)->kirinya = NULL;
+            (*root)->kanannya = NULL;
+            cout<<"=========================="<<endl;
+            cout<<"= Data sudah bertambah!! ="<<endl;
+            cout<<"=========================="<<endl;
+            
+      }
+     //Ketika data yang akan dimasukkan lebih kecil daripada elemen root, maka akan diletakkan di node sebelah kiri.
+      else if(databaru<(*root)->datanya)
+            tambahkan(&(*root)->kirinya, databaru);
+            
+     //Ketika data yang akan dimasukkan lebih besar daripada elemen root, maka akan diletakkan di node sebelah kanan
+      else if(databaru>(*root)->datanya)
+            tambahkan(&(*root)->kanannya, databaru);
+            
+     //Ketika saat dicek data yang akan dimasukkan memiliki nilai yang sama dengan data pada root
+      else if(databaru == (*root)->datanya)
+            cout<<"============================"<<endl;
+			cout<<"= Datanya sudah ada lohh!! ="<<endl;
+			cout<<"============================"<<endl;
+            
+}
+
+//Mencetak tree secara PreOrder
+void PreOrder(Node *root)
+{
+      if(root != NULL){
+            cout<<root->datanya<<endl;
+            PreOrder(root->kirinya);
+            PreOrder(root->kanannya);
+      }
+}
+
+//Mencetak tree secara InOrder
+void InOrder(Node *root)
+{
+      if(root != NULL){
+            InOrder(root->kirinya);
+            cout<<root->datanya<<endl;
+            InOrder(root->kanannya);
+      }
+}
+
+//Mencetak tree secara postOrder
+void PostOrder(Node *root)
+{
+      if(root != NULL){
+            PostOrder(root->kirinya);
+            PostOrder(root->kanannya);
+            cout<<root->datanya<<endl;
+      }
+}
+
+//fungsi utama
+int main()
+{
+      //Mendeklarasikan variabel
+      int pilihannya, datanya;// c;
+      Node *pohon; //*t;
+      pohon = NULL; //inisialisasi node pohon
+      //perulangan do-while
+      do
+      {
+            system("cls"); //bersihkan layar
+            cout<<"================================"<<endl;
+            cout<<"= Tugas Pemrgraman Terstruktur ="<<endl;
+            cout<<"================================"<<endl;
+            cout<<"=                              ="<<endl;
+            cout<<"= Nama : Rika Ningtias Azhari  ="<<endl;
+            cout<<"= NPM  : 1817051073            ="<<endl;
+            cout<<"= Kelas: A                     ="<<endl;
+            cout<<"=                              ="<<endl;
+            cout<<"================================"<<endl;
+			
+			
+			cout<<"\t#PROGRAM TREE C++#"<<endl;
+            cout<<"\n\t=================="<<endl;
+            cout<<"\nMENU"<<endl;
+            cout<<"\n----\n"<<endl;
+            cout<<"1. Menambahkan\n"<<endl;
+            cout<<"2. Lihat Pre-order SKUY !!\n"<<endl;
+            cout<<"3. Lihat in-order SKUY !!\n"<<endl;
+            cout<<"4. Lihat post-order SKUY!!\n"<<endl;
+            cout<<"5. KELUAR\n"<<endl;
+            cout<<"Pilihan : "<<endl;
+            cin >> pilihannya;
+            switch(pilihannya)
+            {
+            //jika pilihannya bernilai 1
+            case 1 :
+                  cout<<"\nINPUT : "<<endl;
+                  cout<<"\n-------"<<endl;
+                  cout<<"\nData barunya  : "<<endl;
+                  scanf("%d", &datanya);
+                  //panggil fungsi untuk menambah node yang berisi data pada tree
+                  tambahkan(&pohon, datanya);
+                  break;
+
+            //jika pilihannya bernilai 2
+            case 2 :
+                  cout<<"\nOUTPUT PRE ORDER : "<<endl;
+                  cout<<"\n------------------\n"<<endl;
+                  if(pohon!=NULL)
+                       //panggil fungsi untuk mencetak data secara preOrder
+                        PreOrder(pohon);
+                  else
+                  		cout<<"=================="<<endl;
+                        cout<<"= Masih kosong!! ="<<endl;
+                        cout<<"=================="<<endl;
+                  break;
+
+            //jika pilihannya bernilai 3
+            case 3 :
+                  cout<<"\nOUTPUT IN ORDER : "<<endl;
+                  cout<<"\n------------------\n"<<endl;
+                  if(pohon!=NULL)
+                       //panggil fungsi untuk mencetak data secara inOrder
+                        InOrder(pohon);
+                  else
+                  		cout<<"=================="<<endl;
+                        cout<<"= Masih kosong!! ="<<endl;
+                        cout<<"=================="<<endl;
+                  break;
+
+            //jika pilihannya bernilai 4
+            case 4 :
+                  cout<<"\nOUTPUT POST ORDER : "<<endl;
+                  cout<<"\n------------------\n"<<endl;
+                  if(pohon!=NULL)
+                       //panggil fungsi untuk mencetak data secara postOrder
+                        PostOrder(pohon);
+                  else
+                        cout<<"=================="<<endl;
+                        cout<<"= Masih kosong!! ="<<endl;
+                        cout<<"=================="<<endl;
+                  break;
+            }
+            cin.get();
+      }while(pilihannya != 5); //akan diulang jika input tidak samadengan 5
+      return EXIT_FAILURE;
+}
